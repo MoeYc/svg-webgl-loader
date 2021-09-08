@@ -43,14 +43,13 @@ jobs:
 #       with:
 #           path: './package.json'
 #       id: package-version
-    - name: Get version
-      id: package_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    # - name: Get version
+    #   id: package_version
+    #   run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
     - uses: actions/checkout@master
     - name: Create a Release
       uses: elgohr/Github-Release-Action@master
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      with:
-        args: v${{ steps.package_version.outputs.VERSION }}
+
