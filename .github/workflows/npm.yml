@@ -52,4 +52,6 @@ jobs:
       uses: elgohr/Github-Release-Action@master
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        args: "test"
 
