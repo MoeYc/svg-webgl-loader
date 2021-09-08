@@ -10,31 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  publish:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        registry-url: https://registry.npmjs.org/
-        cache: 'npm'
-    - run: npm install --no-fund
-    - run: npm run build
-    - run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   release:
-    needs: publish
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
