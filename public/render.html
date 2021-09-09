@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+	/>
+	<meta name="msapplication-tap-highlight" content="no" />
+	<title>svg in webgl</title>
+	<style>
+		html,
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		#app {
+			width: 812px;
+			height: 375px;
+		}
+		.control {
+			position: fixed;
+			right: 0;
+			top: 0;
+			font-size: 16px;
+			padding: 4px;
+		}
+		.control .file {
+			display: block;
+			width: 200px;
+		}
+		.control span {
+			display: block;
+			width: 140px;
+		}
+		.flex {
+			display: flex;
+			width: 100%;
+			margin-bottom: 4px;
+		}
+	</style>
+</head>
+<body>
+<div class="control">
+	<label for="file" class="flex">
+		<span>上传svg</span><input id="file" type="file" accept="image/svg+xml" class="file">
+	</label>
+	<label for="cb" class="flex">
+		<span>清除空白边缘</span><input id="cb" type="checkbox">
+	</label>
+</div>
+</body>
+</html>
