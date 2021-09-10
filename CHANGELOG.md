@@ -1,9 +1,9 @@
-## 1.0.2 (2021-09-09)
+## 1.0.1 (2021-09-10)
 
 
 ### Features
 
-* **init:** init ([1bfc278](https://github.com/elab-opensource/svg-webgl-loader/commit/1bfc2783141ad62bd272e3a129a79abde5c585f4))
+* **init:** init ([a73259e](https://github.com/elab-opensource/svg-webgl-loader/commit/a73259e5bef95baf65b6ffc3de9a5c58debb309b))
 
 
 
