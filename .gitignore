@@ -3,11 +3,14 @@
 .project
 .idea/
 .vscode/
-npm-debug.log
+*.log
 .jshintrc
 .vs/
 .eslintcache
 
 **/node_modules
+yarn.lock
+package-lock.json
+
 
 dist
