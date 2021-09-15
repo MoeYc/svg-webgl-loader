@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.2...v1.0.3) (2021-09-15)
+
+
+### Bug Fixes
+
+* **fix:** add lock ([8fd2568](https://github.com/elab-opensource/svg-webgl-loader/commit/8fd25688bfb59cce165bf983c8b514815ddbb811))
+
+
+
 ## [1.0.2](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.1...v1.0.2) (2021-09-15)
 
 
