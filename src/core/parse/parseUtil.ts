@@ -2,6 +2,7 @@ import { ShapePath } from '@/paths/ShapePath';
 import { Vector2 } from '@/math/Vector2';
 import { Matrix3 } from '@/math/Matrix3';
 import { Vector3 } from '@/math/Vector3';
+import { Scope, Style } from '@/types/types';
 
 // 缓存对象（工具人
 const tempV2 = new Vector2();

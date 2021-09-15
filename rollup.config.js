@@ -20,7 +20,7 @@ export default {
     {
       file: pkg.module,
       // name: 'svgWebglLoader',
-      format: 'es',
+			format: 'es',
     },
   ],
   plugins: [

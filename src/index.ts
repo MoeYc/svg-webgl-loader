@@ -3,8 +3,9 @@ import { parse } from '@/core/parse';
 import { createProgram } from '@/core/createProgram';
 import { getViewBox, parsePathToData } from '@/core/parsePathToData';
 import { paint } from '@/core/paint';
+import { InputParams} from './types/types';
 
-export default async function init(params: InputParams) {
+export default async function init(params: InputParams): Promise<HTMLCanvasElement> {
 	const { svgUrl, config, canvas} = params;
 	const { needTrim = false, needFill = true, needStroke = true } = config || {};
 	// 加载svg
@@ -18,6 +19,7 @@ export default async function init(params: InputParams) {
 	const { viewBox, vertexScale } = getViewBox(boundary, needTrim);
 	// webgl环境配置
 	const { program, gl, canvasReturn } = createProgram(viewBox, canvas);
+
 	gl.clearColor(1, 1, 1, 1);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 	// 绘制·

@@ -1,4 +1,5 @@
 import { DEFAULT_GL_Attributes } from '@/core/createProgram';
+import {ContextAttributes, GLType} from '@/types/types'
 
 export const CONTEXT_NAMES = ['webgl2', 'webgl', 'experimental-webgl'];
 

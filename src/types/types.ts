@@ -1,8 +1,6 @@
-declare module '*.svg';
-
 type UnitType = 'mm' | 'cm' | 'in' | 'pt' | 'pc' | 'px';
 
-type ContextAttributes = Partial<{
+export type ContextAttributes = Partial<{
 	alpha: boolean,
 	depth: boolean,
 	stencil: boolean,
@@ -13,8 +11,8 @@ type ContextAttributes = Partial<{
 	failIfMajorPerformanceCaveat: boolean
 }>;
 
-type GLType = WebGLRenderingContext | WebGL2RenderingContext;
-interface InputParams {
+export type GLType = WebGLRenderingContext | WebGL2RenderingContext;
+export interface InputParams {
 	svgUrl: string;
 	config?: RenderConfig,
 	canvas?: HTMLCanvasElement
@@ -25,12 +23,12 @@ interface RenderConfig {
 	needStroke?: boolean;
 }
 
-interface Scope {
+export interface Scope {
 	defaultUnit: UnitType,
 	defaultDPI: number
 }
 
-interface Style {
+export interface Style {
 	fill: string,
 	fillOpacity: number,
 	strokeOpacity: number,

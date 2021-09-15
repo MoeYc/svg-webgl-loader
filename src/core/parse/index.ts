@@ -14,6 +14,7 @@ import {
 	parseRectNode
 } from '@/core/parse/parseNode';
 import { ShapePath } from '@/paths/ShapePath';
+import { Scope, Style } from '@/types/types';
 
 export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 	const paths = [];

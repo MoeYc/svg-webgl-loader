@@ -3,6 +3,7 @@ import { ShapePath } from '@/paths/ShapePath';
 import { Path } from '@/paths/Path';
 import { Vector2 } from '@/math/Vector2';
 import { getReflection, parseArcCommand } from '@/utils/svgUtils';
+import { Scope } from '@/types/types';
 
 export function parsePathNode(node: HTMLElement): ShapePath {
 	const path = new ShapePath();

@@ -2,7 +2,7 @@
 English | [简体中文](./README-zh_CN.md)
 # svg-webgl-loader
 ## Introduction
-svg-webgl-loader， a tool for rendering svg on webgl (canvas).
+svg-webgl-loader， a tool for rendering svg on canvas(webgl).
 ## Installation
 
 ### npm/yarn
@@ -17,7 +17,11 @@ yarn add svg-webgl-loader
 <script src="https://unpkg.com/svg-webgl-loader/dist/js/index.umd.js"></script>
 
 ```
+If you need a specific version, such as version 1.0.1, you can add the version number:
+```
+<script src="https://unpkg.com/svg-webgl-loader@1.0.1/dist/js/index.umd.js"></script>
 
+```
 ## Usage
 ```
 import svgLoader from "svg-webgl-loader";
@@ -32,6 +36,8 @@ const canvasResult = await svgLoader({
 	canvas
 })
 ```
+[demo](https://codepen.io/yh418807968/pen/GREMPXw?editors=1011)
+
 input：
 * svgUrl(required): url of svg，local file path and online url are accepted
 * config(optional): some config params
