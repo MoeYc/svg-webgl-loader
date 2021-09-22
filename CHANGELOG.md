@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.3...v1.0.4) (2021-09-22)
+
+
+### Bug Fixes
+
+* **fixbug:** add fill-rule ([b183ab6](https://github.com/elab-opensource/svg-webgl-loader/commit/b183ab630599fa6fa764fe4bffbda7cf0ae29710))
+
+
+
 ## [1.0.3](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.2...v1.0.3) (2021-09-15)
 
 
