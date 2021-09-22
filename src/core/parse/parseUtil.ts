@@ -458,6 +458,7 @@ export function parseStyle(
 	}
 
 	addStyle('fill', 'fill');
+	addStyle('fill-rule', 'fillRule');
 	addStyle('fill-opacity', 'fillOpacity', clamp);
 	addStyle('opacity', 'opacity', clamp);
 	addStyle('stroke', 'stroke');
