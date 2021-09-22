@@ -1,26 +1,38 @@
 # svg-webgl-loader
+
 ## 简介
+
 svg-webgl-loader，一个将svg渲染在canvas(webgl)上的工具库。
+
 ## 安装
+
 ### npm/yarn安装
-```
+
+```shell
 npm i svg-webgl-loader
 ```
-```
+
+```shell
 yarn add svg-webgl-loader
 ```
+
 ### CDN
-```
+
+```html
 <script src="https://unpkg.com/svg-webgl-loader/dist/js/index.umd.js"></script>
 
 ```
+
 若需要特定版本，比如1.0.1版本，则可带上版本号：
-```
+
+```html
 <script src="https://unpkg.com/svg-webgl-loader@1.0.1/dist/js/index.umd.js"></script>
 
 ```
+
 ## 使用示例
-```
+
+```js
 import svgLoader from "svg-webgl-loader";
 import svgUrl from "./img/test.svg";
 const canvasResult = await svgLoader({
@@ -33,6 +45,7 @@ const canvasResult = await svgLoader({
 	canvas
 })
 ```
+
 效果可见[demo](https://codepen.io/yh418807968/pen/GREMPXw?editors=1011)
 
 输入：
