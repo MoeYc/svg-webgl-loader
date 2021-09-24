@@ -1,3 +1,12 @@
+# [2.0.0](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.4...v2.0.0) (2021-09-24)
+
+
+### Features
+
+* **all:** support for rendering in specific locations and draw api ([fee1358](https://github.com/elab-opensource/svg-webgl-loader/commit/fee1358f41a65cc1a642104576efedd9d7fa61c3))
+
+
+
 ## [1.0.4](https://github.com/elab-opensource/svg-webgl-loader/compare/v1.0.3...v1.0.4) (2021-09-22)
 
 
