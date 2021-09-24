@@ -1,11 +1,12 @@
 
-export function paint(gl, program, data, boundary, vertexScale, needTrim) {
+export function paint(gl, program, canvas, data, viewBox, loc, config) {
 	const a_Position = gl.getAttribLocation(program, 'a_Position');
 	const u_FragColor = gl.getUniformLocation(program, 'u_FragColor');
+	const { needFill, needStroke} = config || {};
 	data.forEach((item) => {
 		const type = item.type;
 		let vertices, vao, indices;
-		if (type === 'fill') {
+		if (type === 'fill' && needFill) {
 			const fill = item;
 				toggleBlend(gl,fill?.fillOpacity);
 				gl.uniform4f(
@@ -19,10 +20,10 @@ export function paint(gl, program, data, boundary, vertexScale, needTrim) {
 				vertices = fill.vertices;
 				indices = fill.indices;
 				// 绑定和启用缓冲
-				vao = getVertices(vertices, boundary, vertexScale, needTrim);
+			vao = getVertices(vertices, viewBox, loc, canvas);
 				drawVertexWithIndices(gl, a_Position, vao, indices);
 		}
-		if (type === 'stroke') {
+		if (type === 'stroke' && needStroke) {
 				const stroke = item;
 				toggleBlend(gl,stroke?.strokeOpacity);
 				gl.uniform4f(
@@ -37,34 +38,19 @@ export function paint(gl, program, data, boundary, vertexScale, needTrim) {
 				indices = stroke.indices;
 
 				// 绑定和启用缓冲
-				vao = getVertices(vertices, boundary, vertexScale, needTrim);
-
-
+				vao = getVertices(vertices, viewBox, loc, canvas);
 				drawVertexWithIndices(gl, a_Position, vao, indices);
 		}
-
 	})
 
 }
-interface IBoundary {
-	minX: number;
-	maxX: number;
-	minY: number;
-	maxY: number;
-}
-function getVertices(vertices: number[], boundary: IBoundary, vertexScale: number, needTrim: boolean): number[] {
-	let offsetX = 0;
-	let offsetY = 0;
-	let halfWidth = boundary.maxX / 2;
-	let halfHeight = boundary.maxY / 2;
-	if (needTrim) {
-		offsetX = boundary.minX;
-		offsetY = boundary.minY;
-		halfWidth = (boundary.maxX - boundary.minX) / 2;
-		halfHeight = (boundary.maxY - boundary.minY) / 2;
-	}
+
+function getVertices(vertices: number[], viewBox, loc, canvas): number[] {
+	const { x, y, width, height } = loc;
+	const halfWidth = canvas.width / 2;
+	const halfHeight = canvas.height / 2;
 	return vertices
-		.map((v, i) =>(i % 2 === 0 ? ((v - offsetX) * vertexScale - halfWidth) / halfWidth : (halfHeight - (v - offsetY) * vertexScale) / halfHeight));
+		.map((v, i) =>(i % 2 === 0 ? (width/viewBox.width * (v-viewBox.x) + x - halfWidth)/ halfWidth :(halfHeight - (height/viewBox.height* (v-viewBox.y) + y))/halfHeight));
 }
 function toggleBlend(gl, opacity) {
 	if (!opacity) return;

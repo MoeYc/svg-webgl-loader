@@ -12,15 +12,23 @@ export type ContextAttributes = Partial<{
 }>;
 
 export type GLType = WebGLRenderingContext | WebGL2RenderingContext;
-export interface InputParams {
-	svgUrl: string;
-	config?: RenderConfig,
-	canvas?: HTMLCanvasElement
-}
 interface RenderConfig {
 	needTrim?: boolean;
 	needFill?: boolean;
 	needStroke?: boolean;
+}export interface DrawParams {
+	canvas: HTMLCanvasElement;
+	loc?: {
+		x: number;
+		y: number;
+		width?: number;
+		height?: number;
+	};
+	config?: RenderConfig;
+}
+
+export interface SvgLoader {
+	draw: (params: DrawParams) => HTMLCanvasElement;
 }
 
 export interface Scope {
@@ -36,4 +44,10 @@ export interface Style {
 	strokeLineJoin: string,
 	strokeLineCap: string,
 	strokeMiterLimit: number,
+}
+export interface ViewBox {
+	x: number;
+	y: number;
+	width: number,
+	height:number
 }

@@ -3,7 +3,7 @@ import {
 	DEFAULT_SCOPE, getNodeTransform,
 	parseCSSStylesheet,
 	parseStyle,
-	transformPath
+	transformPath,
 } from '@/core/parse/parseUtil';
 import {
 	parseCircleNode,
@@ -14,13 +14,14 @@ import {
 	parseRectNode
 } from '@/core/parse/parseNode';
 import { ShapePath } from '@/paths/ShapePath';
-import { Scope, Style } from '@/types/types';
+import { Scope, Style, ViewBox } from '@/types/types';
 
 export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 	const paths = [];
 	const stylesheets = {};
 	const transformStack = [];
 	const currentTransform = new Matrix3();
+	let viewBox: ViewBox;
 
 	const parseNode = (node, style: Style) => {
 		if (node.nodeType !== 1) return;
@@ -31,6 +32,7 @@ export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 		let path: ShapePath = null;
 		switch (node.nodeName) {
 			case 'svg':
+				viewBox = node.viewBox.baseVal as ViewBox;
 				break;
 			case 'style':
 				parseCSSStylesheet(node, stylesheets);
@@ -69,7 +71,7 @@ export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 			case 'defs':
 				traverseChildNodes = false;
 				break;
-			case 'use':
+			case 'use': {
 				style = parseStyle(node, style, stylesheets, scope);
 				const usedNodeId = (node as SVGUseElement).href.baseVal.substring(1);
 				const usedNode = node.viewportElement.getElementById(usedNodeId);
@@ -82,6 +84,7 @@ export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 					);
 				}
 				break;
+			}
 			default:
 				console.warn(`Invalid Node: ${ node.nodeName }`);
 		}
@@ -129,5 +132,8 @@ export const parse = (text: string, scope: Scope = DEFAULT_SCOPE) => {
 		strokeMiterLimit: 4,
 	});
 
-	return paths;
+	return {
+		paths,
+		viewBox
+	};
 };

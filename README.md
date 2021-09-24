@@ -26,29 +26,51 @@ If you need a specific version, such as version 1.0.1, you can add the version n
 ```
 import svgLoader from "svg-webgl-loader";
 import svgUrl from "./img/test.svg";
-const canvasResult = await svgLoader({
-	svgUrl,
-	config: {
-		needTrim: true,
-		needFill: true,
-		needStroke: true
+// load and parse svg data
+const svgData = await svgLoader(svgUrl);
+// paint
+svgData.draw({
+	canvas,
+	loc: {
+		x: 0,
+		y: 0,
+		width: 300,
+		height: 300
 	},
-	canvas
 })
 ```
 [demo](https://codepen.io/yh418807968/pen/GREMPXw?editors=1011)
 
-input：
-* svgUrl(required): url of svg，local file path and online url are accepted
-* config(optional): some config params
-  * needTrim(optional)：whether need to erase, default value is false
-  * needFill：whether need to fill svg, default value is true
-  * needStroke：whether need to stroke svg, default value is true
-* canvas(optional): the canvas to be rendered on, default is a new canvas created inside
-
-output:
-
-a canvas svg has been rendered on, from the "canvas" of input params or a new canvas created inside
+> If necessary, you can modify the background color through：
+> ```
+> let gl = canvas.getContext('webgl');
+> gl.clearColor(1, 1, 1, 1);
+> gl.clear(gl.COLOR_BUFFER_BIT);
+> ```
+>
+## API
+### draw
+usage：
+```
+const svgData = await svgLoader(svgUrl);
+svgData.draw(drawParams)
+```
+```
+interface drawParams {
+	canvas: HTMLCanvasElement, // the canvas to be rendered on
+	loc?: { // location for painting
+		x: 0,
+		y: 0,
+		width?: 300, // width for painting，default is the width of svg
+		height?: 300 // height for painting, default is the height of svg
+	},
+	config?: {
+		needTrim?:true, // whether need to erase, default value is false
+		needFill?: true, // whether need to fill svg, default value is true
+		needStroke?: true // whether need to stroke svg, default value is true
+	}
+}
+```
 
 ## Remark
 svg-webgl-loader mainly refers to the scheme of rendering svg in [three.js](https://github.com/mrdoob/three.js/blob/dev/examples/webgl_loader_svg.html): parse the paths, discrete paths to points and triangulate, then the svg would be analyzed to many triangles, so that it can be rendered by the webgl shader.

@@ -11,7 +11,7 @@ export const DEFAULT_GL_Attributes = {
 	failIfMajorPerformanceCaveat: false,
 };
 
-export function createProgram(viewBox, canvas?: HTMLCanvasElement) {
+export function createProgram(canvas: HTMLCanvasElement) {
 	// 顶点着色器
 	const vs_source = `
 		attribute vec4 a_Position;
@@ -31,39 +31,45 @@ export function createProgram(viewBox, canvas?: HTMLCanvasElement) {
 		}
 	`;
 
-	// let canvas = document.getElementById(id) as HTMLCanvasElement;
-	if (!canvas) {
-		canvas = document.createElement('canvas');
-		// document.body.appendChild(canvas);
-	}
+	let canvasReturn = canvas;
+	// if (!canvas) {
+		// canvasReturn = document.createElement('canvas');
+	// }
 
-	const gl = getWebGLContext(canvas, DEFAULT_GL_Attributes);
-	const [ MAX_WIDTH, MAX_HEIGHT ] = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+	const gl = getWebGLContext(canvasReturn, DEFAULT_GL_Attributes);
 
-	const setCanvasSize = (canvas, viewBox) => {
-		let width = viewBox.width * 2;
-		let height = viewBox.height * 2;
-		if (width > MAX_WIDTH) {
-			console.warn(`width exceed! width: ${width} MAX_WIDTH: ${MAX_WIDTH}, auto changed to MAX_WIDTH`);
-			width = MAX_WIDTH;
-		} else if (width < 0) {
-			console.warn(`Error width: ${width}`);
-			width = 0;
-		}
-		if (height > MAX_HEIGHT) {
-			console.warn(`height exceed! height: ${height} MAX_HEIGHT: ${MAX_HEIGHT}, auto changed to MAX_HEIGHT`);
-			height = MAX_HEIGHT;
-		} else if (height < 0) {
-			console.warn(`Error height: ${height}`);
-			height = 0;
-		}
-		canvas.width = width;
-		canvas.height = height;
-		canvas.style.width = viewBox.width + 'px';
-		canvas.style.height = viewBox.height + 'px';
-		gl.viewport(0, 0, canvas.width, canvas.height);
-	}
-	setCanvasSize(canvas, viewBox);
+	// if (!canvas) {
+	// 	setCanvasSize(gl, canvasReturn, viewBox);
+	// }
+	gl.viewport(0, 0, canvas.width, canvas.height);
+
+
+
+
+	// function setCanvasSize(gl, canvas:HTMLCanvasElement, viewBox:ViewBox) {
+	// 	const [MAX_WIDTH, MAX_HEIGHT] = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+	// 	let width = viewBox.width;
+	// 	let height = viewBox.height;
+	// 	if (width > MAX_WIDTH) {
+	// 		console.warn(`width exceed! width: ${width} MAX_WIDTH: ${MAX_WIDTH}, auto changed to MAX_WIDTH`);
+	// 		width = MAX_WIDTH;
+	// 	} else if (width < 0) {
+	// 		console.warn(`Error width: ${width}`);
+	// 		width = 0;
+	// 	}
+	// 	if (height > MAX_HEIGHT) {
+	// 		console.warn(`height exceed! height: ${height} MAX_HEIGHT: ${MAX_HEIGHT}, auto changed to MAX_HEIGHT`);
+	// 		height = MAX_HEIGHT;
+	// 	} else if (height < 0) {
+	// 		console.warn(`Error height: ${height}`);
+	// 		height = 0;
+	// 	}
+	// 	canvas.width = width;
+	// 	canvas.height = height;
+	// 	canvas.style.width = viewBox.width + 'px';
+	// 	canvas.style.height = viewBox.height + 'px';
+	// }
+
 
 	// 创建shader
 	const vs_shader = gl.createShader(gl.VERTEX_SHADER);
@@ -96,5 +102,5 @@ export function createProgram(viewBox, canvas?: HTMLCanvasElement) {
 	}
 	gl.useProgram(program);
 
-	return { program, gl, canvasReturn: canvas };
+	return { program, gl };
 }

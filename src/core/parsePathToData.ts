@@ -3,7 +3,8 @@ import { createShapes } from '@/paths/createShapes';
 import { ShapeUtils } from '@/utils/ShapeUtils';
 import { Vector2 } from '@/math/Vector2';
 import { getNormal } from '@/math/MathUtils';
-export function parsePathToData(paths, needFill, needStroke) {
+import { ViewBox } from '@/types/types';
+export function parsePathToData(paths) {
 	const data = [];
 	let boundary = {
 		minX: Infinity,
@@ -14,7 +15,7 @@ export function parsePathToData(paths, needFill, needStroke) {
 
 	paths.forEach((path) => {
     const { fill, fillOpacity } = path.userData.style;
-    if (fill && fill !== 'none' && needFill) {
+    if (fill && fill !== 'none') {
       const color = new Color().setStyle(fill);
       const shapes = createShapes(path);
       shapes.forEach((shape) => {
@@ -76,7 +77,7 @@ export function parsePathToData(paths, needFill, needStroke) {
     }
 
     const stroke = path.userData.style.stroke;
-    if (stroke && stroke !== 'none' && needStroke) {
+    if (stroke && stroke !== 'none') {
 			const style = path.userData.style;
 			const halfLineWidth = style.strokeWidth / 2;
 			const { strokeLineCap, strokeLineJoin, strokeOpacity } = style;
@@ -162,7 +163,7 @@ export function parsePathToData(paths, needFill, needStroke) {
 							l21.normalize();
 							if (Math.abs(l10.dot(inner)) < length10 && Math.abs(l21.dot(inner)) < length21) {
 								switch (strokeLineJoin) {
-									case 'round':
+									case 'round': {
 										if (modify) {
 											indices.push(...pushVertexMap(
 												prevPointL, prevPointR, innerPoint,
@@ -170,13 +171,13 @@ export function parsePathToData(paths, needFill, needStroke) {
 											));
 											// 计算组成圆角的三角形
 											let dot = new Vector2()
-											.subVectors(cur0PointL, innerPoint)
-											.normalize()
-											.dot(
-												new Vector2()
-												.subVectors(cur1PointL, innerPoint)
+												.subVectors(cur0PointL, innerPoint)
 												.normalize()
-											);
+												.dot(
+													new Vector2()
+														.subVectors(cur1PointL, innerPoint)
+														.normalize()
+												);
 											let angle = Math.PI;
 											if (Math.abs(dot) < 1) angle = Math.abs(Math.acos(dot));
 											angle /= 12;
@@ -194,13 +195,13 @@ export function parsePathToData(paths, needFill, needStroke) {
 											));
 											// 计算组成圆角的三角形
 											let dot = new Vector2()
-											.subVectors(cur0PointR, innerPoint)
-											.normalize()
-											.dot(
-												new Vector2()
-												.subVectors(cur1PointR, innerPoint)
+												.subVectors(cur0PointR, innerPoint)
 												.normalize()
-											);
+												.dot(
+													new Vector2()
+														.subVectors(cur1PointR, innerPoint)
+														.normalize()
+												);
 											let angle = Math.PI;
 											if (Math.abs(dot) < 1) angle = Math.abs(Math.acos(dot));
 											angle /= 12;
@@ -215,7 +216,8 @@ export function parsePathToData(paths, needFill, needStroke) {
 										prevPointL = cur1PointL;
 										prevPointR = cur1PointR;
 										break;
-									case 'bevel':
+									}
+									case 'bevel': {
 										if (modify) {
 											indices.push(...pushVertexMap(
 												prevPointL, prevPointR, innerPoint,
@@ -232,8 +234,9 @@ export function parsePathToData(paths, needFill, needStroke) {
 										prevPointL = cur1PointL;
 										prevPointR = cur1PointR;
 										break;
+									}
 									case 'miter':
-									default:
+									default: {
 										if (modify) {
 											indices.push(...pushVertexMap(
 												prevPointL, prevPointR, innerPoint,
@@ -251,10 +254,11 @@ export function parsePathToData(paths, needFill, needStroke) {
 											prevPointL = outerPoint;
 											prevPointR = innerPoint;
 										}
+									}
 								}
 							} else {
 								switch (strokeLineJoin) {
-									case 'round':
+									case 'round': {
 										if (modify) {
 											indices.push(...pushVertexMap(
 												prevPointL, prevPointR, cur0PointL,
@@ -262,13 +266,13 @@ export function parsePathToData(paths, needFill, needStroke) {
 											));
 											// 计算组成圆角的三角形
 											let dot = new Vector2()
-											.subVectors(cur0PointL, curPoint)
-											.normalize()
-											.dot(
-												new Vector2()
-												.subVectors(cur1PointL, curPoint)
+												.subVectors(cur0PointL, curPoint)
 												.normalize()
-											);
+												.dot(
+													new Vector2()
+														.subVectors(cur1PointL, curPoint)
+														.normalize()
+												);
 											let angle = Math.PI;
 											if (Math.abs(dot) < 1) angle = Math.abs(Math.acos(dot));
 											angle /= 12;
@@ -288,13 +292,13 @@ export function parsePathToData(paths, needFill, needStroke) {
 											));
 											// 计算组成圆角的三角形
 											let dot = new Vector2()
-											.subVectors(cur0PointR, curPoint)
-											.normalize()
-											.dot(
-												new Vector2()
-												.subVectors(cur1PointR, curPoint)
+												.subVectors(cur0PointR, curPoint)
 												.normalize()
-											);
+												.dot(
+													new Vector2()
+														.subVectors(cur1PointR, curPoint)
+														.normalize()
+												);
 											let angle = Math.PI;
 											if (Math.abs(dot) < 1) angle = Math.abs(Math.acos(dot));
 											angle /= 12;
@@ -309,7 +313,8 @@ export function parsePathToData(paths, needFill, needStroke) {
 											}
 										}
 										break;
-									case 'bevel':
+									}
+									case 'bevel': {
 										if (modify) {
 											indices.push(...pushVertexMap(
 												prevPointL, prevPointR, cur0PointL,
@@ -324,6 +329,7 @@ export function parsePathToData(paths, needFill, needStroke) {
 											));
 										}
 										break;
+									}
 									case 'miter':
 									default:
 										indices.push(...pushVertexMap(
@@ -436,35 +442,25 @@ function setBoundary(vertex: Vector2, boundary: IBoundary): IBoundary {
 	if (x > boundary.maxX) boundary.maxX = x;
 	if (y < boundary.minY) boundary.minY = y;
 	if (y > boundary.maxY) boundary.maxY = y;
+
 	return boundary;
 }
-export function getViewBox(boundary: IBoundary, needTrim: boolean) {
+export function getViewBox(viewBox: ViewBox, boundary: IBoundary, needTrim: boolean) {
 	const { maxX, minX, maxY, minY } = boundary;
-	let viewBox = {
-		width: maxX,
-		height: maxY,
-	};
+	let realViewBox = viewBox;
+	if (!realViewBox.width) {
+		realViewBox.width = maxX - minX;
+	}
+	if (!realViewBox.height) {
+		realViewBox.height = maxY - minY;
+	}
 	if (needTrim) {
-		viewBox = {
+		realViewBox = {
+			x: minX,
+			y: minY,
 			width: maxX - minX,
 			height: maxY - minY,
 		};
 	}
-
-	let vertexScale = 1;
-	if (viewBox.width > viewBox.height) {
-		if (viewBox.width > 1624) {
-			vertexScale = 1624 / viewBox.width;
-			viewBox.height *= vertexScale;
-			viewBox.width = 1624;
-		}
-	} else {
-		if (viewBox.height > 1624) {
-			vertexScale = 1624 / viewBox.height;
-			viewBox.width *= vertexScale;
-			viewBox.height = 1624;
-		}
-	}
-	return { viewBox, vertexScale };
+	return realViewBox;
 }
-

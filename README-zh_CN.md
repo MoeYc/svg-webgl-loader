@@ -23,30 +23,52 @@ yarn add svg-webgl-loader
 ```
 import svgLoader from "svg-webgl-loader";
 import svgUrl from "./img/test.svg";
-const canvasResult = await svgLoader({
-	svgUrl,
-	config: {
-		needTrim: true,
-		needFill: true,
-		needStroke: true
+// 加载解析svg数据
+const svgData = await svgLoader(svgUrl);
+// 绘制
+svgData.draw({
+	canvas,
+	loc: {
+		x: 0,
+		y: 0,
+		width: 300,
+		height: 300
 	},
-	canvas
 })
 ```
 效果可见[demo](https://codepen.io/yh418807968/pen/GREMPXw?editors=1011)
+> 如果需要，可以通过
+> ```
+> let gl = canvas.getContext('webgl');
+> gl.clearColor(1, 1, 1, 1);
+> gl.clear(gl.COLOR_BUFFER_BIT);
+> ```
+> 修改背景颜色
 
-输入：
-* 【必传】svgUrl: svg的地址，可以是本地文件，也可以是线上地址
-* 【可选】config: 渲染相关的配置
-  * needTrim：是否需要去除svg边缘空白，默认false
-  * needFill：是否需要填充，默认true
-  * needStroke：是否需要描边， 默认true
-* 【可选】canvas: 待渲染的画布，若不传，则新建canvas。
-
-输出：
-
-输出为已经渲染了svg的canvas对象，此对象为传入的canvas对象或者内部新建的canvas对象。
-
+## API
+### draw
+使用：
+```
+const svgData = await svgLoader(svgUrl);
+svgData.draw(drawParams)
+```
+输入参数：
+```
+interface drawParams {
+	canvas: HTMLCanvasElement, // 待绘制的画布canvas
+	loc?: { // 绘制区域
+		x: 0,
+		y: 0,
+		width?: 300, // 绘制宽度，默认为svg图片本身宽度
+		height?: 300 // 绘制宽度，默认为svg图片本身宽度
+	},
+	config?: {
+		needTrim?:true, // 是否需要去除svg边缘空白，默认false
+		needFill?: true, // 是否需要填充，默认true
+		needStroke?: true // 是否需要描边， 默认true
+	}
+}
+```
 ## 说明
 svg-webgl-loader主要是参考[three.js](https://github.com/mrdoob/three.js/blob/dev/examples/webgl_loader_svg.html)中加载渲染svg的方案：通过解析路径、路径离散化、三角化，将svg分解为众多三角形，从而使得其可以通过webgl shader渲染。
 

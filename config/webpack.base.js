@@ -7,7 +7,6 @@ const resolve = (...args) => {
 
 const config = {
   entry: {
-		render: resolve('..', 'src', 'render.ts'),
 		demo: resolve('..', 'src', 'demo.ts'),
 	},
   output: {
@@ -36,17 +35,6 @@ const config = {
     ],
   },
 	plugins: [
-		new HtmlWebpackPlugin({
-			filename: 'render.html',
-			template: resolve('..', 'public', 'render.html'),
-			inject: true,
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true,
-				removeAttributeQuotes: true,
-			},
-			chunks: ['render'],
-		}),
 		new HtmlWebpackPlugin({
 			filename: 'demo.html',
 			template: resolve('..', 'public', 'demo.html'),
